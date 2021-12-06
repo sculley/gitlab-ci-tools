@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
 
+# Function: Print a help message.
+usage() {
+  echo "Usage: $0 [ -b BUILD_ARG_FILE ] [ -i IMAGE ]" 1>&2 
+}
+
+# Function: Exit with error.
+exit() {                         
+  usage
+  exit 1
+}
+
 while getopts b:i:flag
 do
-    case "${flag}" in
-        b) BUILD_ARG_FILE=${OPTARG};;
-        r) IMAGE=${IMAGE};;
+    case "${options}" in
+        b) BUILD_ARG_FILE=${OPTARG}
+           [[ ! -z "$BUILD_ARG_FILE" ]] || exit()
+           ;;
+        i) IMAGE=${OPTARG}
+           [[ ! -z "$IMAGE" ]] || exit()
+           ;;
     esac
 done
 
